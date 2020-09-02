@@ -1,0 +1,20 @@
+<div class="main">
+    <div class="container">
+        <table class="header-table">
+            <thead>
+                <tr>
+                    <td *ngFor="let day of weekDays">{{day}}</td> 
+                </tr>
+            </thead>
+        </table>
+        <table class="body-table" [class.mat-elevation-z10]=true> 
+            <tbody>
+                    <tr *ngFor="let week of weeks; let weekIndex = index">
+                        <td *ngFor="let day of weeks[weekIndex]">
+                            <app-day [day]=day [inactive]="!(calendarMonth.days.includes(day))"></app-day>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

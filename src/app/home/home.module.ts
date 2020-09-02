@@ -8,6 +8,7 @@ import { SharedModule } from '@app/shared';
 import { MaterialModule } from '@app/material.module';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
+import { CalendarModule } from '../calendar/calendar.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { HomeComponent } from './home.component';
     SharedModule,
     FlexLayoutModule,
     MaterialModule,
-    HomeRoutingModule
+    HomeRoutingModule,
+    CalendarModule
   ],
   declarations: [
     HomeComponent

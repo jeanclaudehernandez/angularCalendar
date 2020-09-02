@@ -144,7 +144,7 @@ describe('Models', () => {
 
         it('should correctly create month', () => {
            expect(monthInstance.days.length).toEqual(31);
-           expect(monthInstance.tail).toEqual([1, 2, 3, 4]);
+           expect(monthInstance.tail.length).toEqual(4);
         });
     });
 });

@@ -30,5 +30,18 @@ export const MonthHead = (year: number, month: number) => {
 };
 
 export const parseForecast = (date: Date, data: any) => {
+    const today = new Date();
+    const diff = Math.ceil(((date.getTime() - today.getTime()) / (1000 * 3600 * 24)));
+    if (diff >= 0) {
+        return data.forecast.forecastday[diff];
+    }
     return data.forecast.forecastday[0];
 };
+
+export const chunkArrayInGroups = (arr: any[], size: number ) => {
+    const myArray = [];
+    for (let i = 0; i < arr.length; i += size) {
+      myArray.push(arr.slice(i, i + size));
+    }
+    return myArray;
+  }

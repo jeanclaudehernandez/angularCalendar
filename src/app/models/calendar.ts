@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 import getWeather from '../weatherApi';
-import { parseForecast, MonthHead, MonthTail, weeksInMonth } from '../lib/helper';
+import { parseForecast, MonthHead, MonthTail, weeksInMonth, chunkArrayInGroups } from '../lib/helper';
 
 export class Weather {
     maxTemp: number;
@@ -8,12 +8,15 @@ export class Weather {
     humidity: number;
     condition: string;
     conditionIcon: string;
+    chanceOfRain: number;
 
     constructor(data: any) {
         this.maxTemp = data.maxtemp_c;
         this.minTemp = data.mintemp_c;
         this.condition = data.condition.text;
         this.conditionIcon = data.condition.icon;
+        this.humidity = data.avghumidity;
+        this.chanceOfRain = data.daily_chance_of_rain;
     }
 }
 
@@ -38,6 +41,9 @@ export class Reminder {
     getValidationError(description: string, dateTime: string, city: string, color: string): string {
         if (description.length > 30) {
             return 'Reminder length has to be lower than 30.';
+        }
+        if (description.length < 1) {
+            return 'Reminder cannot be empty.';
         }
         const date = new Date(dateTime);
         if (date.toDateString() === 'Invalid Date') {
@@ -97,8 +103,8 @@ export class Month {
     days: Day[];
     year: number;
     month: number;
-    head: number[];
-    tail: number[];
+    head: Day[];
+    tail: Day[];
     weekCount: number;
 
     constructor(year: number, month: number) {
@@ -114,8 +120,13 @@ export class Month {
         }
         const emonth = month < 10  ? '0' + month : month;
         this.weekCount = weeksInMonth(new Date(`${year}-${emonth}-01`));
-        this.tail = MonthTail(year, month);
-        this.head = MonthHead(year, month);
+        this.tail = MonthTail(year, month).map((day: number) => new Day(day, `${year}-${month - 1}-${day}`));
+        this.head = MonthHead(year, month).map((day: number) => new Day(day, `${year}-${month + 1}-${day}`));
 
+    }
+
+    getWeeks() {
+        const allDays = this.head.concat(this.days.concat(this.tail));
+        return chunkArrayInGroups(allDays, 7);
     }
 }

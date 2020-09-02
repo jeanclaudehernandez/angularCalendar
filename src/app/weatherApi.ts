@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
-import "isomorphic-fetch"
+import 'isomorphic-fetch';
 
 const apiUrl = environment.weatherApiUrl;
 const apiKey = environment.weatherApiKey;
@@ -11,10 +11,10 @@ const history = apiUrl + environment.weatherApiHistoryUrl;
 export default function  getWeather(city: string, date: Date): Promise<any> {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  const diff = ((date.getTime() - today.getTime()) / (1000 * 3600 * 24));
+  const diff = Math.ceil(((date.getTime() - today.getTime()) / (1000 * 3600 * 24)));
   let url: string;
-  if (diff <= 3 && diff > 0) {
-    url = `${forecast}?days=${diff}&`;
+  if (diff < 3 && diff > 0) {
+    url = `${forecast}?days=${diff + 1}&`;
   } else if (diff === 0) {
     url = `${forecast}?days=1&`;
   } else if (diff < 0 && diff >= -7) {
@@ -28,7 +28,7 @@ export default function  getWeather(city: string, date: Date): Promise<any> {
   return new Promise((resolve, reject) => {
     fetch(url).then((response) => {
       resolve(response.json());
-    }).catch((error) => {
+    }, (error) => {
       console.log(error);
       reject(error);
     });

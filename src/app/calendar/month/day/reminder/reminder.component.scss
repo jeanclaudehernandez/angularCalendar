@@ -1,0 +1,29 @@
+.reminder {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+}
+
+.reminder-dialog {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    padding: 0px;
+
+    .reminder-header{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .reminder-color {
+        width: 100%;
+        border-radius: 5px;
+        height: 20px;
+    }
+
+    .reminder-title {
+        margin: 15px 0px 0px 20px;
+    }
+
+    .reminder-info {
+        margin: 0px 20px;
+    }
+}

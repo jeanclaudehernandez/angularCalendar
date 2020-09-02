@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { finalize } from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-home',
@@ -8,13 +8,16 @@ import { finalize } from 'rxjs/operators';
 })
 export class HomeComponent implements OnInit {
 
-  quote: string | undefined;
+  currentDate: Date;
+  dateString: string;
   isLoading = false;
 
   constructor() { }
 
   ngOnInit() {
     this.isLoading = true;
+    this.currentDate = new Date();
+    this.dateString = moment(this.currentDate).format('MMMM YYYY');
 
   }
 }
