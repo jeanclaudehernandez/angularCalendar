@@ -2,19 +2,21 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { Reminder, Day, Month } from '@app/models/calendar';
 import * as moment from 'moment';
-import { MonthComponent } from './month.component';
+import { DayComponent } from './day.component';
 
 @Component({
-    selector: 'app-calendar',
-    template: `
-        <app-month month="currentMonth" year="currentYear" day="currentDay"/>
-    `,
+    selector: 'app-month',
+    template: `<table>
+        <thead>
+            <tr>
+                <th></th>
+            </tr>
+        </thead>
+    </table>`,
     styleUrls: ['./calendar.component.scss']
 })
-export class CalendarComponent implements OnInit {
-    currentYear: number;
-    currentMonth: number;
-    currentDay: number;
+export class MonthComponent implements OnInit {
+    @Input() month: number;
 
     constructor() {}
 

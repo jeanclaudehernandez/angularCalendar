@@ -28,3 +28,7 @@ export const MonthHead = (year: number, month: number) => {
     }
     return days.sort();
 };
+
+export const parseForecast = (date: Date, data: any) => {
+    return data.forecast.forecastday[0];
+};
