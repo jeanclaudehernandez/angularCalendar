@@ -2,11 +2,10 @@ import { environment } from '@env/environment';
 import { emonth } from './lib/helper';
 import 'isomorphic-fetch';
 
-const apiUrl = environment.weatherApiUrl;
+const apiUrl = 'https://api.weatherapi.com/v1/';
+const forecast = apiUrl + 'forecast.json';
+const history = apiUrl + 'history.json';
 const apiKey = environment.weatherApiKey;
-const current = apiUrl + environment.weatherApiCurrentUrl;
-const forecast = apiUrl + environment.weatherApiForecastUrl;
-const history = apiUrl + environment.weatherApiHistoryUrl;
 
 export default function  getWeather(city: string, date: Date): Promise<any> {
   const today = new Date();
