@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Reminder, Day, Month, Weather } from '@app/models/calendar';
-import * as moment from 'moment';
+import { Reminder, Month } from '@app/models/calendar';
 
 @Component({
     selector: 'app-month',
@@ -10,13 +9,15 @@ import * as moment from 'moment';
 export class MonthComponent implements OnInit {
     @Input() month: Month;
     @Output() moveReminder = new EventEmitter();
-    weeks: Day[][];
     weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednessday', 'Thrusday', 'Friday', 'Saturday'];
 
     constructor() {}
 
+    get weeks() {
+        return this.month.getWeeks();
+    }
+
     ngOnInit() {
-        this.weeks = this.month.getWeeks();
     }
 
     onMoveReminder(event: Reminder) {

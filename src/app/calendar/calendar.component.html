@@ -1,1 +1,5 @@
+<div class="month-selector">
+    <button mat-flat-button class="btn-primary" (click)=previousMonth()>&#8592;</button>
+    <button mat-flat-button class="btn-primary" (click)=nextMonth()>&#8594;</button>
+</div>
 <app-month [month]=currentMonth (moveReminder)=onMoveReminder($event)> </app-month>

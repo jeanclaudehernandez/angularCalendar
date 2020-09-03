@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Month, Reminder, Calendar } from '../models/calendar';
+import { monthString, addMonth, subtractMonth } from '../lib/helper';
 
 
 @Component({
@@ -21,16 +22,28 @@ export class CalendarComponent implements OnInit {
         const year = this.currentDate.getFullYear();
         const month = this.currentDate.getMonth() + 1;
         this.calendar.addMonth(year, month);
-        console.log(this.calendar.months);
-        this.currentMonth = this.calendar.months[this.getMonthString(year, month)];
-    }
-
-    getMonthString(year: number, month: number) {
-        const emonth = month < 10 ? '0' + month : month;
-        return `${year}-${emonth}`;
+        this.currentMonth = this.calendar.months[monthString(year, month)];
     }
 
     onMoveReminder(event: Reminder) {
         this.calendar.placeReminder(event);
+    }
+
+    nextMonth() {
+        const {year, month} = addMonth(this.currentMonth.year, this.currentMonth.month);
+        const monthId = monthString(year, month);
+        if (!this.calendar.months[monthId]) {
+            this.calendar.addMonth(year, month);
+        }
+        this.currentMonth = this.calendar.months[monthId];
+    }
+
+    previousMonth() {
+        const {year, month} = subtractMonth(this.currentMonth.year, this.currentMonth.month);
+        const monthId = monthString(year, month);
+        if (!this.calendar.months[monthId]) {
+            this.calendar.addMonth(year, month);
+        }
+        this.currentMonth = this.calendar.months[monthId];
     }
 }

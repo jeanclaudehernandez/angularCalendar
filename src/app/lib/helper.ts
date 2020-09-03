@@ -49,3 +49,23 @@ export const chunkArrayInGroups = (arr: any[], size: number ) => {
 export const emonth = (month: number) => month < 10 ? '0' + month : month;
 
 export const monthString = (year: number, month: number) => `${year}-${emonth(month)}`;
+
+export const addMonth = (year: number, month: number) => {
+    if (month === 12) {
+        month = 1;
+        year++;
+    } else {
+        month++;
+    }
+    return {year, month};
+};
+
+export const subtractMonth = (year: number, month: number) => {
+    if (month === 1) {
+        month = 12;
+        year--;
+    } else {
+        month --;
+    }
+    return {year, month};
+};

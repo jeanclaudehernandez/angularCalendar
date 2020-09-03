@@ -1,6 +1,7 @@
 import * as moment from 'moment';
 import getWeather from '../weatherApi';
-import { parseForecast, MonthHead, MonthTail, weeksInMonth, chunkArrayInGroups } from '../lib/helper';
+import { parseForecast, MonthHead, MonthTail,
+     weeksInMonth, chunkArrayInGroups, addMonth, subtractMonth } from '../lib/helper';
 import { stringLiteral } from '@babel/types';
 import { monthString, emonth } from '../lib/helper';
 
@@ -132,8 +133,12 @@ export class Month {
             this.days.push(new Day(i, `${year}-${month}-${i}`));
         }
         this.weekCount = weeksInMonth(new Date(`${year}-${emonth(month)}-01`));
-        this.tail = MonthTail(year, month).map((day: number) => new Day(day, `${year}-${month - 1}-${day}`));
-        this.head = MonthHead(year, month).map((day: number) => new Day(day, `${year}-${month + 1}-${day}`));
+        const {year: nextYear, month: nextMonth} = addMonth(year, month);
+        this.tail = MonthTail(year, month)
+            .map((day: number) => new Day(day, `${monthString(nextYear, nextMonth)}-${day}`));
+        const {year: previousYear, month: previousMonth} = subtractMonth(year, month);
+        this.head = MonthHead(year, month)
+            .map((day: number) => new Day(day, `${monthString(nextYear, nextMonth)}-${day}`));
 
     }
 
