@@ -43,11 +43,6 @@ describe('Models', () => {
                 .toThrow('Date and Time must be valid.');
         });
 
-        it('should error when day is out of month', () => {
-            expect (() => new Reminder(description, '2020-09-31T21:00', city, redColor))
-                .toThrow('Date and Time must be valid.');
-        });
-
         it('should error when month is not between 1 and 12', () => {
             expect (() => new Reminder(description, '2020-13-14', city, redColor))
                 .toThrow('Date and Time must be valid.');
