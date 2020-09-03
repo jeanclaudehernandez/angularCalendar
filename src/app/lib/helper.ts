@@ -69,3 +69,11 @@ export const subtractMonth = (year: number, month: number) => {
     }
     return {year, month};
 };
+
+export const getCalendarString = (year: number, month: number) => {
+    return moment(new Date(`${monthString(year, month)}-02`)).format('YYYY-MMMM');
+};
+
+export const daysInMonth = (year: number, month: number): number => {
+    return new Date(year, month + 1 , 0).getDate();
+};
