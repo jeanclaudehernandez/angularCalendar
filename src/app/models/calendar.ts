@@ -1,6 +1,7 @@
 import * as moment from 'moment';
 import getWeather from '../weatherApi';
 import { parseForecast, MonthHead, MonthTail, weeksInMonth, chunkArrayInGroups } from '../lib/helper';
+import { stringLiteral } from '@babel/types';
 
 export class Weather {
     maxTemp: number;
@@ -85,6 +86,15 @@ export class Day {
         this.reminders.push(new Reminder(data.description, data.dateTime, data.city, data.color));
     }
 
+    sortReminders() {
+        const compareReminders = (r1: Reminder, r2: Reminder) => {
+            const time1 = r1.dateTime.getTime();
+            const time2 = r2.dateTime.getTime();
+            return time1 >= time2 ? 1 : -1;
+        };
+        this.reminders.sort(compareReminders);
+    }
+
     deleteReminder(index: number): void {
         if (this.reminders.length > index) {
             this.reminders.splice(index, 1);
@@ -114,6 +124,8 @@ export class Month {
         if (!(typeof month === 'number') || (month < 1 || month > 12)) {
             throw Error ('Month must be a number and between 1 and 12 inclusive.');
         }
+        this.year = year;
+        this.month = month;
         this.days = [];
         for (let i = 1; i <= moment(`${year}  ${month}`, 'YYYY-MM').daysInMonth(); i++) {
             this.days.push(new Day(i, `${year}-${month}-${i}`));
@@ -128,5 +140,35 @@ export class Month {
     getWeeks() {
         const allDays = this.head.concat(this.days.concat(this.tail));
         return chunkArrayInGroups(allDays, 7);
+    }
+
+    placeReminder(reminder: Reminder) {
+        const day = this.days[reminder.dateTime.getDate() - 1];
+        day.addReminder(reminder);
+        day.sortReminders();
+    }
+}
+
+export class Calendar {
+    months: any;
+    constructor() {
+        this.months = {};
+    }
+
+    addMonth(year: number, month: number) {
+        console.log('month added');
+        const emonth = month < 10 ? '0' + month : month;
+        this.months[String(`${year}-${emonth}`)] = new Month(year, month);
+    }
+
+    placeReminder(reminder: Reminder) {
+        const month = reminder.dateTime.getMonth() + 1;
+        const emonth = month < 10 ? '0' + month : month;
+        const year = reminder.dateTime.getFullYear();
+        const monthString = `${year}-${emonth}`;
+        if (!this.months[monthString]) {
+            this.addMonth(year, month);
+        }
+        this.months[monthString].placeReminder(reminder);
     }
 }
