@@ -19,17 +19,7 @@ export class DayComponent implements OnInit {
 
     constructor(private dialog: MatDialog) {}
 
-    ngOnInit() {
-        const reminderData = {
-            description: 'mi reminder que tiene letras.',
-            city: 'london',
-            dateTime: '2020-09-' + '0' + this.day.day + 'T20:01',
-            color: '#3c1361'
-        };
-        if (this.day.day === 4) {
-            this.day.addReminder(reminderData);
-        }
-    }
+    ngOnInit() { }
 
     openDialog() {
         const config = new MatDialogConfig();
