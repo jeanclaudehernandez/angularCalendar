@@ -8,7 +8,22 @@
     font-family: Roboto, "Helvetica Neue", sans-serif;
     padding: 0px;
 
-    .reminder-header{
+    .button {
+        &.edit {
+            background-color: #2196f3;
+        }
+
+        &.warn {
+            background-color: red;
+        }
+        margin-top: 5px;
+        margin-left: 5px;
+        height: 1.5em;
+        line-height: 1.5em;
+        color: white;
+    }
+
+    .reminder-body{
         display: flex;
         justify-content: space-between;
     }

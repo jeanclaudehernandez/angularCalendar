@@ -5,11 +5,19 @@
            <button class="btn-primary" (click)=openDialog()>+</button>
        </div>
        <div class="reminder-containter">
-            <app-reminder *ngFor="let reminder of day.reminders" [reminder]=reminder style="margin: 0px 5px 5px 5px;"></app-reminder>
+            <app-reminder 
+                *ngFor="let reminder of day.reminders; let i  = index" 
+                [key]=i
+                [reminder]=reminder 
+                style="margin: 0px 5px 5px 5px;"
+                (editReminder)=editReminder($event)
+                (removeReminder)=removeReminder($event)
+                >
+            </app-reminder>
        </div> 
     </mat-card-content>
 </mat-card>
 
 <ng-template #reminderInputDialog>
-    <app-reminder-input [date]=day.date (submitReminder)=addReminder($event)></app-reminder-input>
+    <app-reminder-input [edit]=isEditing [editReminder]=currentReminder [date]=day.date (submitReminder)=addReminder($event)></app-reminder-input>
 </ng-template>

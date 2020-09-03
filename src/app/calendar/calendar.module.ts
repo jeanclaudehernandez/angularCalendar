@@ -11,8 +11,8 @@ import { MonthComponent } from './month/month.component';
 import { DayComponent } from './month/day/day.component';
 import { ReminderComponent } from './month/day/reminder/reminder.component';
 import { ReminderInputComponent } from './month/day/reminder-input/reminder-input.component';
-import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';  
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -24,7 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MaterialModule,
     ColorPickerModule,
     NgxMaterialTimepickerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   declarations: [
     CalendarComponent,

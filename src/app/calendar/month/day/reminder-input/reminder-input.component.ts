@@ -11,11 +11,14 @@ import * as moment from 'moment';
 })
 export class ReminderInputComponent implements OnInit {
     @Input() date: Date;
+    @Input() edit = false;
+    @Input() editReminder: Reminder;
     @Output() submitReminder = new EventEmitter();
     dateString = '';
     color = new FormControl('');
     reminder = new FormControl('');
     city = new FormControl('');
+    selectedDate: Date;
     hour = '00:00';
     errorMessage = '';
 
@@ -24,6 +27,13 @@ export class ReminderInputComponent implements OnInit {
 
     ngOnInit() {
         this.dateString = moment(this.date).format('YYYY MMMM DD');
+        if (this.edit) {
+            this.city.setValue(this.editReminder.city);
+            this.color.setValue(this.editReminder.color);
+            this.reminder.setValue(this.editReminder.description);
+            this.hour = moment(this.editReminder.dateTime).format('HH:mm');
+            this.selectedDate = this.editReminder.dateTime;
+        }
     }
 
     updateTime(event: any) {
@@ -32,7 +42,12 @@ export class ReminderInputComponent implements OnInit {
 
     submit() {
         this.errorMessage = '';
-        const date = moment(this.date).format('YYYY-MM-DD');
+        let date: string;
+        if (this.edit) {
+            date = moment(this.selectedDate).format('YYYY-MM-DD');
+        } else {
+            date = moment(this.date).format('YYYY-MM-DD');
+        }
         try {
             const reminder = new Reminder(this.reminder.value, `${date}T${this.hour}`,
                 this.city.value, this.color.value);

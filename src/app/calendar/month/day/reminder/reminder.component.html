@@ -3,8 +3,14 @@
 <ng-template #dialog>
     <div class="reminder-dialog">
         <div class="reminder-color" [style.background-color]=reminder.color></div>
-        <h4 class="reminder-title">{{reminder.description}}</h4>
-        <div class="reminder-header">
+        <div class="reminder-body">
+            <h4 class="reminder-title">{{reminder.description}}</h4>
+            <div>
+                <button mat-flat-button class="main-button" class="button edit" (click)=edit()>Edit</button>
+                <button mat-flat-button class="main-button" class="button warn" color="'warn'" (click)=remove()>Delete</button>
+            </div>
+        </div>
+        <div class="reminder-body">
             <div class="reminder-info">
                 <div>
                     <p>Date: {{dateString}}</p>
@@ -13,19 +19,19 @@
                 </div>
             </div>
             
-            <div *ngIf="reminder.weather != undefined" class="reminder-info">
+            <div *ngIf=weatherAvailable class="reminder-info">
                 <p>Max: {{reminder.weather.maxTemp}}&deg;</p>
                 <p>Min: {{reminder.weather.minTemp}}&deg;</p>
                 <p>Humidty: {{reminder.weather.humidity}}%</p>
                 <p>Chance of Rain: {{reminder.weather.chanceOfRain}}%</p>
             </div>
 
-            <div *ngIf="reminder.weather != undefined" class="reminder-info">
+            <div *ngIf=weatherAvailable class="reminder-info">
                 <img [src]=reminder.weather.conditionIcon/> 
                 <p>{{reminder.weather.condition}}</p>
             </div>
 
-            <div *ngIf="reminder.weather == undefined" class="reminder-info">
+            <div *ngIf=!weatherAvailable class="reminder-info">
                 <p>Weather information was not available.</p>
             </div>
         </div>

@@ -1,9 +1,12 @@
 <div class="main">
-    <div class="title">
+    <div class="title" *ngIf=!edit>
             <h4>{{dateString}}</h4>
     </div>
     <div class="body">
         <div>
+            <label class="label" *ngIf="edit">
+                Date: 
+            </label>
             <label class="label">
                 Reminder:    
             </label>
@@ -13,11 +16,16 @@
             </label>
             <label class="label">Hour:</label>
         </div>
-        <div >
+        <div>
+            <div *ngIf="edit">
+                <input matInput [matDatepicker]="datePicker" [(ngModel)]=selectedDate>
+                <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+                <mat-datepicker #datePicker></mat-datepicker>
+            </div>
             <input class="input text-input" [formControl]=reminder/>
             <input class="input" [formControl]=city/>
             <input [(colorPicker)]=color.value [style.background-color]=color.value class="input" [formControl]=color/>
-            <ngx-timepicker-field [format]="24" [defaultTime]="'00:00'" (timeChanged)=updateTime($event)></ngx-timepicker-field>
+            <ngx-timepicker-field [format]=24 [defaultTime]=hour (timeChanged)=updateTime($event)></ngx-timepicker-field>
         </div>
     </div>
     <div class="footer">

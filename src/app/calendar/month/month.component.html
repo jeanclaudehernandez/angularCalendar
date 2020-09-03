@@ -11,7 +11,7 @@
             <tbody>
                     <tr *ngFor="let week of weeks; let weekIndex = index">
                         <td *ngFor="let day of weeks[weekIndex]">
-                            <app-day [day]=day [inactive]="!(calendarMonth.days.includes(day))"></app-day>
+                            <app-day [day]=day (moveReminder)=onMoveReminder($event) [inactive]="!(month.days.includes(day))"></app-day>
                         </td>
                     </tr>
             </tbody>
