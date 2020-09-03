@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Month, Reminder, Calendar } from '../models/calendar';
 import { monthString, addMonth, subtractMonth } from '../lib/helper';
+import * as moment from 'moment';
 
 
 @Component({
@@ -45,5 +46,9 @@ export class CalendarComponent implements OnInit {
             this.calendar.addMonth(year, month);
         }
         this.currentMonth = this.calendar.months[monthId];
+    }
+
+    get dateString() {
+        return moment(new Date(monthString(this.currentMonth.year, this.currentMonth.month + 1))).format('YYYY-MMMM');
     }
 }

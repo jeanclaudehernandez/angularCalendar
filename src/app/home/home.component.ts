@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-home',
@@ -17,8 +16,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     this.currentDate = new Date();
-    this.dateString = moment(this.currentDate).format('MMMM YYYY');
-
   }
 }
 
