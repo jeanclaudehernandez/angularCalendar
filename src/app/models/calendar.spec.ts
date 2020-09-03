@@ -38,10 +38,26 @@ describe('Models', () => {
                 .toThrow('Date and Time must be valid.');
         });
 
-        it('should error when description is too long', () => {
-            expect (() => new Reminder('1234567890123456789012345678901',
-                today, city, redColor))
-                    .toThrow('Reminder length has to be lower than 30.');
+        it('should error when day is 0', () => {
+            expect (() => new Reminder(description, '2020-09-0', city, redColor))
+                .toThrow('Date and Time must be valid.');
+        });
+
+        it('should error when day is out of month', () => {
+            expect (() => new Reminder(description, '2020-09-31T21:00', city, redColor))
+                .toThrow('Date and Time must be valid.');
+        });
+
+        it('should error when month is not between 1 and 12', () => {
+            expect (() => new Reminder(description, '2020-13-14', city, redColor))
+                .toThrow('Date and Time must be valid.');
+            expect (() => new Reminder(description, '2020-00-14', city, redColor))
+                .toThrow('Date and Time must be valid.');
+        });
+
+        it('should error when adding a float', () => {
+            expect (() => new Reminder(description, '2020-05-20.5', city, redColor))
+                .toThrow('Date and Time must be valid.');
         });
 
         it('should error when city is empty', () => {
@@ -161,16 +177,15 @@ describe('Models', () => {
 
         it('should correct add a new month', () => {
             calendar.addMonth(year, month);
-            const currentMonth = calendar.months[monthString(year, month)];
+            const currentMonth = calendar.getMonth(year, month);
             expect(currentMonth.month).toBe(month);
             expect(currentMonth.year).toBe(year);
         });
 
         it('should correctly place a reminder on a given date', () => {
-            const monthString = '2015-01';
             const reminder = new Reminder(description, '2015-01-01T00:00:00', city, redColor);
             calendar.placeReminder(reminder);
-            expect(calendar.months[monthString].days[0].reminders[0].description).toBe(reminder.description);
+            expect(calendar.getMonth(2015, 1).days[0].reminders[0].description).toBe(reminder.description);
         });
     });
 });

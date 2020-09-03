@@ -13,11 +13,10 @@ export class CalendarService {
   }
 
   setCurrentMonth(year: number, month: number) {
-    const monthId = monthString(year, month);
-    if (!this.calendar.months[monthId]) {
+    if (!this.calendar.getMonth(year, month)) {
         this.calendar.addMonth(year, month);
     }
-    this.currentMonth = this.calendar.months[monthId];
+    this.currentMonth = this.calendar.getMonth(year, month);
   }
 
   getCurrentMonth() {

@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 import getWeather from '../weatherApi';
 import { parseForecast, MonthHead, MonthTail,
-     weeksInMonth, chunkArrayInGroups, addMonth, subtractMonth } from '../lib/helper';
+     weeksInMonth, chunkArrayInGroups, addMonth, subtractMonth, daysInMonth } from '../lib/helper';
 import { stringLiteral } from '@babel/types';
 import { monthString, emonth } from '../lib/helper';
 
@@ -88,7 +88,7 @@ export class Day {
         this.reminders.push(new Reminder(data.description, data.dateTime, data.city, data.color));
     }
 
-    sortReminders() {
+    sortReminders(): void {
         const compareReminders = (r1: Reminder, r2: Reminder) => {
             const time1 = r1.dateTime.getTime();
             const time2 = r2.dateTime.getTime();
@@ -138,7 +138,7 @@ export class Month {
             .map((day: number) => new Day(day, `${monthString(nextYear, nextMonth)}-${day}`));
         const {year: previousYear, month: previousMonth} = subtractMonth(year, month);
         this.head = MonthHead(year, month)
-            .map((day: number) => new Day(day, `${monthString(nextYear, nextMonth)}-${day}`));
+            .map((day: number) => new Day(day, `${monthString(previousMonth, previousMonth)}-${day}`));
 
     }
 
@@ -171,6 +171,10 @@ export class Calendar {
         if (!this.months[monthId]) {
             this.addMonth(year, month);
         }
-        this.months[monthId].placeReminder(reminder);
+        this.getMonth(year, month).placeReminder(reminder);
+    }
+
+    getMonth(year: number, month: number) {
+        return this.months[monthString(year, month)];
     }
 }
