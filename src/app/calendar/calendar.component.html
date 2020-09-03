@@ -5,6 +5,6 @@
             <mat-card-title>{{dateString}}</mat-card-title>
             <button mat-flat-button class="btn-primary" (click)=nextMonth()>&#8594;</button>
         </div>
-        <app-month [month]=currentMonth (moveReminder)=onMoveReminder($event)> </app-month>
+        <app-month [month]=calendarService.currentMonth> </app-month>
     </div>
 </div>

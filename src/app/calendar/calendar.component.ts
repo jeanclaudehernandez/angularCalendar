@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Month, Reminder, Calendar } from '../models/calendar';
+import { Month, Calendar } from '../models/calendar';
 import { monthString, addMonth, subtractMonth } from '../lib/helper';
+import { CalendarService } from '../calendar.service';
 import * as moment from 'moment';
 
 
@@ -10,45 +11,39 @@ import * as moment from 'moment';
     styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
-    currentMonth: Month;
     currentDay: number;
     calendar: Calendar;
     months: Month[];
     @Input()currentDate: Date;
 
-    constructor() {}
+    constructor(private calendarService: CalendarService) {}
 
     ngOnInit() {
-        this.calendar = new Calendar();
+        this.calendar = this.calendarService.calendar;
         const year = this.currentDate.getFullYear();
         const month = this.currentDate.getMonth() + 1;
-        this.calendar.addMonth(year, month);
-        this.currentMonth = this.calendar.months[monthString(year, month)];
+        this.calendarService.setCurrentMonth(year, month);
     }
 
-    onMoveReminder(event: Reminder) {
-        this.calendar.placeReminder(event);
+    changeMonth(year: number, month: number) {
+        this.calendarService.setCurrentMonth(year, month);
     }
 
     nextMonth() {
-        const {year, month} = addMonth(this.currentMonth.year, this.currentMonth.month);
-        const monthId = monthString(year, month);
-        if (!this.calendar.months[monthId]) {
-            this.calendar.addMonth(year, month);
-        }
-        this.currentMonth = this.calendar.months[monthId];
+        const {year, month} = addMonth(this.calendarService.currentMonth.year, this.calendarService.currentMonth.month);
+        this.changeMonth(year, month);
     }
 
     previousMonth() {
-        const {year, month} = subtractMonth(this.currentMonth.year, this.currentMonth.month);
-        const monthId = monthString(year, month);
-        if (!this.calendar.months[monthId]) {
-            this.calendar.addMonth(year, month);
-        }
-        this.currentMonth = this.calendar.months[monthId];
+        const {year, month} = subtractMonth(
+            this.calendarService.currentMonth.year,
+            this.calendarService.currentMonth.month
+        );
+        this.changeMonth(year, month);
     }
 
     get dateString() {
-        return moment(new Date(monthString(this.currentMonth.year, this.currentMonth.month + 1))).format('YYYY-MMMM');
+        return moment(new Date(monthString(this.calendarService.currentMonth.year,
+             this.calendarService.currentMonth.month + 1))).format('YYYY-MMMM');
     }
 }

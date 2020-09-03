@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { Reminder, Month, Day } from '@app/models/calendar';
+import { Month, Day } from '@app/models/calendar';
 
 @Component({
     selector: 'app-month',
@@ -8,7 +8,6 @@ import { Reminder, Month, Day } from '@app/models/calendar';
 })
 export class MonthComponent implements OnInit, OnChanges {
     @Input() month: Month;
-    @Output() moveReminder = new EventEmitter();
     weeks: Day[][];
     weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednessday', 'Thrusday', 'Friday', 'Saturday'];
 
@@ -20,9 +19,4 @@ export class MonthComponent implements OnInit, OnChanges {
 
     ngOnInit() {
     }
-
-    onMoveReminder(event: Reminder) {
-        this.moveReminder.emit(event);
-    }
-
 }

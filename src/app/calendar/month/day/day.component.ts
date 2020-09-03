@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild, TemplateRef, Output, EventEmitter } from '@angular/core';
 import { Day, Reminder } from '@app/models/calendar';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { CalendarService } from '../../../calendar.service';
 
 @Component({
     selector: 'app-day',
@@ -17,7 +18,7 @@ export class DayComponent implements OnInit {
     currentReminder: Reminder;
     currentReminderIndex: number;
 
-    constructor(private dialog: MatDialog) {}
+    constructor(private dialog: MatDialog, private calendar: CalendarService) {}
 
     ngOnInit() { }
 
@@ -32,8 +33,14 @@ export class DayComponent implements OnInit {
 
     addReminder(event: any) {
         if (this.isEditing) {
-            this.removeReminder(this.currentReminderIndex);
-            this.moveReminder.emit(new Reminder(event.description, event.dateTime, event.city, event.color));
+            const reminder = new Reminder(
+                event.description,
+                event.dateTime,
+                event.city,
+                event.color
+            );
+            this.calendar.calendar.placeReminder(reminder);
+            this.day.deleteReminder(this.currentReminderIndex);
         } else {
             this.day.addReminder(event);
             this.day.sortReminders();
