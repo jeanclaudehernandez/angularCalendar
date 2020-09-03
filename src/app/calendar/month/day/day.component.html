@@ -1,0 +1,27 @@
+<mat-card [class.dayInactive]=inactive class="main">
+    <mat-card-content>
+       <div class="card-header">
+           <p>{{day.day}}</p>
+           <div>
+                <button class="btn primary" (click)=openDialog()>+</button>
+                <button class="btn warn" (click)=removeAll()>x</button>
+           </div>
+           
+       </div>
+       <div class="reminder-containter">
+            <app-reminder 
+                *ngFor="let reminder of day.reminders; let i  = index" 
+                [key]=i
+                [reminder]=reminder 
+                style="margin: 0px 5px 5px 5px;"
+                (editReminder)=editReminder($event)
+                (removeReminder)=removeReminder($event)
+                >
+            </app-reminder>
+       </div> 
+    </mat-card-content>
+</mat-card>
+
+<ng-template #reminderInputDialog>
+    <app-reminder-input [edit]=isEditing [editReminder]=currentReminder [date]=day.date (submitReminder)=addReminder($event)></app-reminder-input>
+</ng-template>

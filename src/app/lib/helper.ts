@@ -30,5 +30,42 @@ export const MonthHead = (year: number, month: number) => {
 };
 
 export const parseForecast = (date: Date, data: any) => {
+    const today = new Date();
+    const diff = Math.ceil(((date.getTime() - today.getTime()) / (1000 * 3600 * 24)));
+    if (diff >= 0) {
+        return data.forecast.forecastday[diff];
+    }
     return data.forecast.forecastday[0];
+};
+
+export const chunkArrayInGroups = (arr: any[], size: number ) => {
+    const myArray = [];
+    for (let i = 0; i < arr.length; i += size) {
+      myArray.push(arr.slice(i, i + size));
+    }
+    return myArray;
+}
+
+export const emonth = (month: number) => month < 10 ? '0' + month : month;
+
+export const monthString = (year: number, month: number) => `${year}-${emonth(month)}`;
+
+export const addMonth = (year: number, month: number) => {
+    if (month === 12) {
+        month = 1;
+        year++;
+    } else {
+        month++;
+    }
+    return {year, month};
+};
+
+export const subtractMonth = (year: number, month: number) => {
+    if (month === 1) {
+        month = 12;
+        year--;
+    } else {
+        month --;
+    }
+    return {year, month};
 };

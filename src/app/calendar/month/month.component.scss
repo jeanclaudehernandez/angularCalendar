@@ -1,0 +1,28 @@
+.main {
+    display: flex;
+    justify-content: center;
+    
+    .container {
+        width: 100%;
+
+        .header-table {
+            color: white;
+            background-color: #2196f3;
+            border-radius: 5px 5px 0px 0px;
+            width: 100%;
+            
+            td{
+                width: 14.28%;
+            }
+        }
+    
+        .body-table {
+            border: 1px solid #2196f3;
+            border-radius: 0px 0px 5px 5px;
+            width: 100%;
+            td {
+                width: 14.28%;
+            }
+        }
+    }    
+}

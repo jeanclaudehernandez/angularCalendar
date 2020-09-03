@@ -1,0 +1,10 @@
+<div class="main">
+    <div class="holder">
+        <div class="month-selector">
+            <button mat-flat-button class="btn-primary" (click)=previousMonth()>&#8592;</button>
+            <mat-card-title>{{dateString}}</mat-card-title>
+            <button mat-flat-button class="btn-primary" (click)=nextMonth()>&#8594;</button>
+        </div>
+        <app-month [month]=currentMonth (moveReminder)=onMoveReminder($event)> </app-month>
+    </div>
+</div>

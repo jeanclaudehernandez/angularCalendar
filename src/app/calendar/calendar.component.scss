@@ -1,0 +1,21 @@
+.main {
+    display: flex;
+    justify-content: space-around;
+    .holder {
+        width: 60%;
+        .month-selector {
+            display: flex;
+            justify-content: space-between;
+            
+            .btn-primary {
+                background-color: #2196f3;
+                border: 0px;
+                font-size: 2rem;
+                border-radius: 5px;
+                top: 13px;
+                color: white;
+                margin-bottom: 20px;
+            }
+        }
+    }
+}

@@ -15,6 +15,7 @@ export const environment = {
   hmr: true,
   version: env.npm_package_version + '-dev',
   serverUrl: '/api',
+  weatherApiKey: '',
   defaultLanguage: 'en-US',
   supportedLanguages: [
     'en-US',

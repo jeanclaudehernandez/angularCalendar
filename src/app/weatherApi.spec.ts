@@ -16,7 +16,7 @@ describe('Weather Api', () => {
 
   it('should query forecast', async () => {
     const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 3);
+    tomorrow.setDate(tomorrow.getDate() + 2);
     tomorrow.setHours(0, 0, 0, 0);
     const result = await getWeather('london', tomorrow);
     expect(result.current).toBeTruthy();

@@ -1,0 +1,53 @@
+.reminder-containter {
+    display: flex;
+    max-height: 50px;
+    flex-wrap: wrap;
+    position: relative;
+    top: -30px;
+    overflow-y: auto;
+}
+
+.dayInactive {
+    background-color: gray;
+}
+
+.card-header{
+    width: 100;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    top: -20px;
+
+    .btn {
+        position: relative;
+        color: #fff;
+        &.primary {
+            background-color: #2196f3;
+        }
+        &.warn {
+            background-color: red;
+        }
+        height: 20px;
+        border: 0px;
+        border-radius: 5px;
+        top: 13px;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.main {
+    height: 80px;
+    padding-top: 10px;
+    .btn {
+        visibility: hidden;
+    }
+
+    &:hover:not(.dayInactive) {
+        .btn {
+            visibility: visible;
+        }
+    }
+}

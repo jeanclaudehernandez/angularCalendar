@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -8,14 +7,15 @@ import { finalize } from 'rxjs/operators';
 })
 export class HomeComponent implements OnInit {
 
-  quote: string | undefined;
+  currentDate: Date;
+  dateString: string;
   isLoading = false;
 
   constructor() { }
 
   ngOnInit() {
     this.isLoading = true;
-
+    this.currentDate = new Date();
   }
 }
 
