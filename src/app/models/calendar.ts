@@ -156,7 +156,6 @@ export class Calendar {
     }
 
     addMonth(year: number, month: number) {
-        console.log('month added');
         const emonth = month < 10 ? '0' + month : month;
         this.months[String(`${year}-${emonth}`)] = new Month(year, month);
     }

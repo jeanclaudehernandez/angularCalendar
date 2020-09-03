@@ -1,4 +1,4 @@
-import { Reminder, Day, Month, Weather } from './calendar';
+import { Reminder, Day, Month, Weather, Calendar } from './calendar';
 import getWeather from '../weatherApi';
 import * as moment from 'moment';
 
@@ -145,6 +145,32 @@ describe('Models', () => {
         it('should correctly create month', () => {
            expect(monthInstance.days.length).toEqual(31);
            expect(monthInstance.tail.length).toEqual(4);
+        });
+    });
+
+    describe('Calendar', () => {
+
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        let calendar: Calendar;
+
+        beforeEach(() => {
+            calendar = new Calendar();
+        });
+
+        it('should correct add a new month', () => {
+            calendar.addMonth(year, month);
+            const emonth = month < 10 ? '0'+ month : month;
+            const currentMonth = calendar.months[`${year}-${emonth}`];
+            expect(currentMonth.month).toBe(month);
+            expect(currentMonth.year).toBe(year);
+        });
+
+        it('should correctly place a reminder on a given date', () => {
+            const monthString = '2015-01';
+            const reminder = new Reminder(description, '2015-01-01T00:00:00', city, redColor);
+            calendar.placeReminder(reminder);
+            expect(calendar.months[monthString].days[0].reminders[0].description).toBe(reminder.description);
         });
     });
 });
