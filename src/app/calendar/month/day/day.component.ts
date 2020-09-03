@@ -64,4 +64,8 @@ export class DayComponent implements OnInit {
         this.day.deleteReminder(index);
     }
 
+    removeAll() {
+        this.day.deleteAllReminders();
+    }
+
 }

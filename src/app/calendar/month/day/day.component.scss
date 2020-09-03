@@ -18,10 +18,15 @@
     position: relative;
     top: -20px;
 
-    .btn-primary {
+    .btn {
         position: relative;
         color: #fff;
-        background-color: #2196f3;
+        &.primary {
+            background-color: #2196f3;
+        }
+        &.warn {
+            background-color: red;
+        }
         height: 20px;
         border: 0px;
         border-radius: 5px;
@@ -36,12 +41,12 @@
 .main {
     height: 80px;
     padding-top: 10px;
-    .btn-primary {
+    .btn {
         visibility: hidden;
     }
 
     &:hover:not(.dayInactive) {
-        .btn-primary {
+        .btn {
             visibility: visible;
         }
     }

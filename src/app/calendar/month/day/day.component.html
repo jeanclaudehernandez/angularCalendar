@@ -2,7 +2,11 @@
     <mat-card-content>
        <div class="card-header">
            <p>{{day.day}}</p>
-           <button class="btn-primary" (click)=openDialog()>+</button>
+           <div>
+                <button class="btn primary" (click)=openDialog()>+</button>
+                <button class="btn warn" (click)=removeAll()>x</button>
+           </div>
+           
        </div>
        <div class="reminder-containter">
             <app-reminder 
