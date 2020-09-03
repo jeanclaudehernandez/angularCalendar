@@ -2,6 +2,7 @@ import * as moment from 'moment';
 import getWeather from '../weatherApi';
 import { parseForecast, MonthHead, MonthTail, weeksInMonth, chunkArrayInGroups } from '../lib/helper';
 import { stringLiteral } from '@babel/types';
+import { monthString, emonth } from '../lib/helper';
 
 export class Weather {
     maxTemp: number;
@@ -130,8 +131,7 @@ export class Month {
         for (let i = 1; i <= moment(`${year}  ${month}`, 'YYYY-MM').daysInMonth(); i++) {
             this.days.push(new Day(i, `${year}-${month}-${i}`));
         }
-        const emonth = month < 10  ? '0' + month : month;
-        this.weekCount = weeksInMonth(new Date(`${year}-${emonth}-01`));
+        this.weekCount = weeksInMonth(new Date(`${year}-${emonth(month)}-01`));
         this.tail = MonthTail(year, month).map((day: number) => new Day(day, `${year}-${month - 1}-${day}`));
         this.head = MonthHead(year, month).map((day: number) => new Day(day, `${year}-${month + 1}-${day}`));
 
@@ -156,18 +156,16 @@ export class Calendar {
     }
 
     addMonth(year: number, month: number) {
-        const emonth = month < 10 ? '0' + month : month;
-        this.months[String(`${year}-${emonth}`)] = new Month(year, month);
+        this.months[monthString(year, month)] = new Month(year, month);
     }
 
     placeReminder(reminder: Reminder) {
         const month = reminder.dateTime.getMonth() + 1;
-        const emonth = month < 10 ? '0' + month : month;
         const year = reminder.dateTime.getFullYear();
-        const monthString = `${year}-${emonth}`;
-        if (!this.months[monthString]) {
+        const monthId = monthString(year, month);
+        if (!this.months[monthId]) {
             this.addMonth(year, month);
         }
-        this.months[monthString].placeReminder(reminder);
+        this.months[monthId].placeReminder(reminder);
     }
 }

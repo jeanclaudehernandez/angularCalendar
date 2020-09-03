@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
+import { emonth } from './lib/helper';
 import 'isomorphic-fetch';
 
 const apiUrl = environment.weatherApiUrl;
@@ -18,9 +18,8 @@ export default function  getWeather(city: string, date: Date): Promise<any> {
   } else if (diff === 0) {
     url = `${forecast}?days=1&`;
   } else if (diff < 0 && diff >= -7) {
-    const emonth = date.getMonth() + 1;
-    const month = emonth  < 10 ? '0' + emonth : emonth;
-    url = `${history}?dt=${date.getFullYear()}-${month}-${date.getDate()}&`;
+    const month = date.getMonth() + 1;
+    url = `${history}?dt=${date.getFullYear()}-${emonth(month)}-${date.getDate()}&`;
   } else {
     throw Error('Date must be either up to 3 days in the future or 7 days in the past.');
   }

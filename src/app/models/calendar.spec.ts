@@ -1,4 +1,5 @@
 import { Reminder, Day, Month, Weather, Calendar } from './calendar';
+import { monthString } from '../lib/helper';
 import getWeather from '../weatherApi';
 import * as moment from 'moment';
 
@@ -160,8 +161,7 @@ describe('Models', () => {
 
         it('should correct add a new month', () => {
             calendar.addMonth(year, month);
-            const emonth = month < 10 ? '0'+ month : month;
-            const currentMonth = calendar.months[`${year}-${emonth}`];
+            const currentMonth = calendar.months[monthString(year, month)];
             expect(currentMonth.month).toBe(month);
             expect(currentMonth.year).toBe(year);
         });

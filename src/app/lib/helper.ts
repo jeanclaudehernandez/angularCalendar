@@ -44,4 +44,8 @@ export const chunkArrayInGroups = (arr: any[], size: number ) => {
       myArray.push(arr.slice(i, i + size));
     }
     return myArray;
-  }
+}
+
+export const emonth = (month: number) => month < 10 ? '0' + month : month;
+
+export const monthString = (year: number, month: number) => `${year}-${emonth(month)}`;
